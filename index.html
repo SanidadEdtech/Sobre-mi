@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vera López · SanidadEdTech — e-portfolio</title>
+<meta name="description" content="Vera López — Enfermera de urgencias y emergencias, Profesora Titular de FP Sanitaria, Instructora en SVB, EdTech e IA.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#B23140; --red-deep:#8E2531; --red-soft:#F3DEDF;
+    --ink:#191C22; --slate:#5B6472; --slate-2:#8A93A0;
+    --paper:#FFFFFF; --paper-2:#F4F5F7; --card:#FFFFFF; --line:#E6E8EC;
+    --panel:#13161D; --panel-2:#0D1016; --panel-line:#252A34;
+    --ecg:#27C08C; --cyan:#46B7D6; --amber:#E6A340;
+    --shadow:0 1px 2px rgba(25,28,34,.05),0 12px 32px -18px rgba(25,28,34,.28);
+    --r:16px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Inter",system-ui,sans-serif;font-size:16px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  h1,h2,h3,h4{font-family:"Sora",sans-serif;margin:0;line-height:1.12;letter-spacing:-.02em}
+  a{color:inherit;text-decoration:none}
+  .mono{font-family:"JetBrains Mono",monospace}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:60;
+    background:rgba(255,255,255,.85);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-in{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:"Sora";font-weight:700;letter-spacing:-.02em}
+  .brand .pulse-mark{width:36px;height:36px;flex:none;object-fit:contain}
+  .brand small{display:block;font-family:"JetBrains Mono";font-weight:500;font-size:10px;letter-spacing:.14em;color:var(--slate);text-transform:uppercase;margin-top:1px}
+  .nav{display:flex;gap:4px;align-items:center}
+  .nav a{
+    font-size:13.5px;font-weight:500;color:var(--slate);padding:8px 12px;border-radius:9px;transition:.18s;
+  }
+  .nav a:hover{color:var(--ink);background:var(--paper-2)}
+  @media(max-width:860px){.nav{display:none}}
+
+  .lang{display:flex;align-items:center;gap:4px;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:3px}
+  .lang button{
+    font-family:"JetBrains Mono";font-weight:700;font-size:11.5px;letter-spacing:.06em;
+    border:0;background:transparent;color:var(--slate);cursor:pointer;
+    padding:6px 11px;border-radius:999px;transition:.16s;
+  }
+  .lang button:hover{color:var(--ink)}
+  .lang button.on{background:var(--red);color:#fff}
+  .lang button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+  /* ---------- Hero (ECG paper) ---------- */
+  .hero{
+    position:relative;background:#fff;color:var(--ink);overflow:hidden;border-bottom:1px solid var(--line);
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(178,49,64,.06) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(178,49,64,.06) 1px,transparent 1px),
+      linear-gradient(rgba(178,49,64,.13) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(178,49,64,.13) 1px,transparent 1px);
+    background-size:13px 13px,13px 13px,65px 65px,65px 65px;
+    -webkit-mask-image:radial-gradient(135% 100% at 50% 2%,#000 46%,transparent 88%);
+    mask-image:radial-gradient(135% 100% at 50% 2%,#000 46%,transparent 88%);
+  }
+  .hero-in{position:relative;padding:64px 24px 0;max-width:1120px;margin:0 auto}
+  .patient-line{
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    font-family:"JetBrains Mono";font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--slate);
+  }
+  .patient-line .live{display:inline-flex;align-items:center;gap:7px;color:var(--red)}
+  .patient-line .dot{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 0 0 rgba(178,49,64,.6);animation:blip 1.6s infinite}
+  @keyframes blip{0%{box-shadow:0 0 0 0 rgba(178,49,64,.5)}70%{box-shadow:0 0 0 9px rgba(178,49,64,0)}100%{box-shadow:0 0 0 0 rgba(178,49,64,0)}}
+  .hero h1{
+    font-size:clamp(2.9rem,7.4vw,5.6rem);font-weight:800;margin:20px 0 0;letter-spacing:-.035em;color:var(--ink);
+  }
+  .hero .role{
+    margin:16px 0 0;max-width:720px;color:var(--slate);font-size:clamp(.98rem,1.9vw,1.18rem);font-weight:500;line-height:1.5;
+  }
+  .hero .role b{color:var(--ink);font-weight:600}
+  .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;font-family:"Sora";font-weight:600;font-size:14.5px;
+    padding:12px 20px;border-radius:11px;cursor:pointer;border:1px solid transparent;transition:.18s;
+  }
+  .btn-red{background:var(--red);color:#fff}
+  .btn-red:hover{background:var(--red-deep);transform:translateY(-1px)}
+  .btn-ghost{background:#fff;color:var(--ink);border-color:var(--line)}
+  .btn-ghost:hover{border-color:var(--red);background:var(--paper)}
+  .btn:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+
+  /* ECG trace */
+  .ecg-hero{position:relative;margin-top:40px;height:150px}
+  .ecg-hero svg{position:absolute;inset:0;width:100%;height:100%}
+  .ecg-base{fill:none;stroke:rgba(178,49,64,.24);stroke-width:2}
+  .ecg-live{fill:none;stroke:var(--red);stroke-width:2.8;stroke-linejoin:round;filter:drop-shadow(0 1px 3px rgba(178,49,64,.30))}
+
+  /* Monitor readouts */
+  .readouts{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:6px;
+  }
+  .ro{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 18px 20px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .ro::before{content:"";position:absolute;left:18px;top:0;width:26px;height:3px;background:var(--red);border-radius:0 0 3px 3px}
+  .ro .v{font-family:"JetBrains Mono";font-weight:700;font-size:clamp(1.7rem,4vw,2.5rem);line-height:1;letter-spacing:-.02em;color:var(--ink)}
+  .ro .l{font-family:"JetBrains Mono";font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);margin-top:9px;line-height:1.35}
+  .ro.g .v,.ro.a .v{color:var(--red)}
+  @media(max-width:640px){.readouts{grid-template-columns:repeat(2,1fr)}}
+  .scrollcue{display:flex;justify-content:center;text-align:center;padding:22px 24px 34px;color:var(--slate);font-family:"JetBrains Mono";font-size:11.5px;letter-spacing:.03em;text-transform:none}
+  .scrollcue span{display:inline-flex;align-items:center;gap:9px;max-width:520px}
+  @keyframes drop{0%{opacity:.2;transform:scaleY(.4)}50%{opacity:1;transform:scaleY(1)}100%{opacity:.2;transform:scaleY(.4)}}
+
+  /* ---------- Sections ---------- */
+  .sec{padding:88px 0}
+  .sec-alt{background:var(--paper-2)}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;font-family:"JetBrains Mono";font-weight:700;
+    font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:16px;
+  }
+  .eyebrow::before{content:"";width:26px;height:2px;background:var(--red)}
+  .sec h2{font-size:clamp(1.9rem,4.4vw,2.9rem);font-weight:700;max-width:16ch}
+  .lead{margin-top:16px;color:var(--slate);font-size:1.06rem;max-width:60ch}
+
+  /* About */
+  .about-grid{display:grid;grid-template-columns:1.35fr .9fr;gap:48px;margin-top:36px;align-items:start}
+  @media(max-width:820px){.about-grid{grid-template-columns:1fr;gap:32px}}
+  .about-body p{margin:0 0 18px;font-size:1.06rem;color:#2C313A}
+  .about-body p:first-child{font-size:1.16rem}
+  .about-body .drop{
+    font-family:"Sora";font-weight:700;font-size:3.2rem;float:left;line-height:.86;
+    margin:6px 14px 0 0;color:var(--red);
+  }
+  .factbox{
+    background:#fff;color:var(--ink);border-radius:var(--r);padding:26px;border:1px solid var(--line);border-left:3px solid var(--red);
+    box-shadow:var(--shadow);position:sticky;top:88px;
+  }
+  .factbox h4{color:var(--red);font-size:.95rem;font-family:"JetBrains Mono";font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+  .factbox .ecg-mini{width:100%;height:26px;margin:4px 0 18px}
+  .factbox .ecg-mini .mini-base{fill:none;stroke:rgba(178,49,64,.30);stroke-width:2}
+  .factbox .ecg-mini .mini-live{fill:none;stroke:var(--red);stroke-width:2;filter:drop-shadow(0 1px 2px rgba(178,49,64,.25))}
+  .factbox ul{list-style:none;margin:0;padding:0}
+  .factbox li{display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--line);font-size:.92rem;line-height:1.45}
+  .factbox li:first-child{border-top:0}
+  .factbox li .k{color:var(--red);font-family:"JetBrains Mono";font-weight:700;flex:none;font-size:.8rem;margin-top:2px;width:20px}
+
+  /* Highlights */
+  .hl-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:40px}
+  @media(max-width:1040px){.hl-grid{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:680px){.hl-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:480px){.hl-grid{grid-template-columns:1fr}}
+  .hl{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;box-shadow:var(--shadow);transition:.2s}
+  .hl:hover{transform:translateY(-3px);border-color:var(--red-soft)}
+  .hl .ico{width:42px;height:42px;border-radius:11px;background:var(--red-soft);color:var(--red-deep);display:grid;place-items:center;margin-bottom:16px}
+  .hl .ico svg{width:22px;height:22px}
+  .hl h3{font-size:1.08rem;font-weight:700;margin-bottom:8px}
+  .hl p{margin:0;color:var(--slate);font-size:.93rem;line-height:1.5}
+
+  /* Experience */
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:32px}
+  .filters button{
+    font-family:"Sora";font-weight:600;font-size:13.5px;padding:9px 16px;border-radius:999px;cursor:pointer;
+    border:1px solid var(--line);background:var(--card);color:var(--slate);transition:.16s;
+  }
+  .filters button:hover{color:var(--ink);border-color:var(--slate-2)}
+  .filters button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .filters button:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+  .timeline{margin-top:34px;position:relative;padding-left:30px}
+  .timeline::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--red),var(--line))}
+  .tl-item{position:relative;padding:0 0 30px}
+  .tl-item::before{
+    content:"";position:absolute;left:-30px;top:6px;width:14px;height:14px;border-radius:50%;
+    background:var(--card);border:2.5px solid var(--red);
+  }
+  .tl-item.teach::before{border-color:var(--slate)}
+  .tl-item.mgmt::before{border-color:var(--ink)}
+  .tl-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow);transition:.18s}
+  .tl-card:hover{transform:translateX(3px);border-color:var(--slate-2)}
+  .tl-top{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:baseline}
+  .tl-card h3{font-size:1.08rem;font-weight:700}
+  .tl-org{color:var(--red-deep);font-weight:600;font-size:.94rem;margin-top:3px}
+  .tl-per{font-family:"JetBrains Mono";font-size:12px;color:var(--slate);white-space:nowrap;letter-spacing:.02em}
+  .tl-desc{margin:11px 0 0;color:var(--slate);font-size:.93rem;line-height:1.55}
+  .chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+  .chip{font-family:"JetBrains Mono";font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    padding:4px 9px;border-radius:6px;background:var(--paper-2);color:var(--slate)}
+  .chip.care{background:var(--red-soft);color:var(--red-deep)}
+  .chip.teach{background:#E7EBF0;color:#3C4657}
+  .chip.mgmt{background:var(--ink);color:#fff}
+  .tl-note{margin-top:22px;font-size:.86rem;color:var(--slate-2);font-style:italic;padding-left:6px}
+
+  /* Education */
+  .edu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:38px}
+  @media(max-width:760px){.edu-grid{grid-template-columns:1fr}}
+  .edu{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow);position:relative;transition:.18s}
+  .edu:hover{transform:translateY(-2px);border-color:var(--red-soft)}
+  .edu.now{border-color:var(--red);background:linear-gradient(180deg,#fff, #FFFBFA)}
+  .edu .tag{font-family:"JetBrains Mono";font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-2)}
+  .edu.now .tag{color:var(--red)}
+  .edu h3{font-size:1.02rem;font-weight:700;margin:8px 0 6px;line-height:1.3}
+  .edu .inst{color:var(--slate);font-size:.9rem}
+  .now-pill{position:absolute;top:16px;right:16px;font-family:"JetBrains Mono";font-size:9.5px;font-weight:700;letter-spacing:.08em;
+    background:var(--red);color:#fff;padding:4px 8px;border-radius:6px;text-transform:uppercase}
+
+  /* Certifications */
+  .cert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:38px}
+  @media(max-width:820px){.cert-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.cert-grid{grid-template-columns:1fr}}
+  .cert{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:18px;box-shadow:var(--shadow);transition:.18s}
+  .cert:hover{transform:translateY(-2px)}
+  .cert .badge{display:inline-flex;align-items:center;gap:6px;font-family:"JetBrains Mono";font-size:9.5px;font-weight:700;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--slate-2);margin-bottom:10px}
+  .cert.inst{border-color:var(--red);background:linear-gradient(180deg,#fff,#FFFBFA)}
+  .cert.inst .badge{color:var(--red)}
+  .cert.ai{border-color:#DCE7EC}
+  .cert.ai .badge{color:var(--cyan)}
+  .cert h3{font-size:.98rem;font-weight:700;line-height:1.3}
+  .cert .by{color:var(--slate);font-size:.85rem;margin-top:5px}
+  .star{width:13px;height:13px}
+
+  /* Skills */
+  .sk-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:38px}
+  @media(max-width:720px){.sk-grid{grid-template-columns:1fr}}
+  .sk{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;box-shadow:var(--shadow)}
+  .sk h3{font-size:1.05rem;font-weight:700;display:flex;align-items:center;gap:10px;margin-bottom:16px}
+  .sk h3 .bar{width:10px;height:22px;border-radius:3px;background:var(--red)}
+  .sk:nth-child(2) h3 .bar{background:var(--ink)} .sk:nth-child(3) h3 .bar{background:var(--slate)} .sk:nth-child(4) h3 .bar{background:var(--red-deep)} .sk:nth-child(5) h3 .bar{background:var(--amber)}
+  .sk .tags{display:flex;flex-wrap:wrap;gap:8px}
+  .sk .t{font-size:.86rem;font-weight:500;padding:6px 12px;border-radius:999px;background:var(--paper-2);color:#3C4350;border:1px solid var(--line)}
+
+  /* Contact */
+  .contact{background:#fff;color:var(--ink);border-top:1px solid var(--line)}
+  .contact .lead{color:var(--slate)}
+  .links{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:34px;max-width:720px}
+  @media(max-width:560px){.links{grid-template-columns:1fr}}
+  .lk{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);
+    border-radius:13px;padding:16px 18px;transition:.18s;box-shadow:var(--shadow)}
+  .lk:hover{border-color:var(--red);transform:translateY(-2px)}
+  .lk .ico{width:38px;height:38px;border-radius:10px;background:var(--red-soft);display:grid;place-items:center;flex:none;color:var(--red-deep)}
+  .lk .ico svg{width:19px;height:19px}
+  .lk .m{font-family:"JetBrains Mono";font-size:11px;color:var(--slate);letter-spacing:.06em}
+  .lk .n{font-weight:600;font-family:"Sora";font-size:.98rem;color:var(--ink)}
+  .credo{
+    margin-top:52px;padding-top:26px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;
+  }
+  .credo .way{font-family:"Sora";font-weight:600;font-size:1.02rem;color:var(--ink);display:inline-flex;align-items:center;gap:12px}
+  .credo .way-logo{width:30px;height:30px;object-fit:contain;flex:none}
+  .credo small{font-family:"JetBrains Mono";font-size:11px;color:var(--slate);letter-spacing:.04em}
+
+  /* reveal */
+  .rv{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+  .rv.in{opacity:1;transform:none}
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+    .rv{opacity:1;transform:none}
+  }
+
+  @media print{
+    .topbar,.hero .hero-cta,.scrollcue,.ecg-hero,.filters,.lk .ico,.contact{color:#000}
+    body{background:#fff}
+    .sec{padding:24px 0;page-break-inside:avoid}
+    .hero{background:#fff;color:#000;border:0}
+    .hero h1{color:#000;-webkit-text-fill-color:#000}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<header class="topbar">
+  <div class="wrap topbar-in">
+    <a class="brand" href="#top" aria-label="SanidadEdTech">
+      <img class="pulse-mark" src="data:image/png;base64,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" alt="Logo SanidadEdTech">
+      <span>SanidadEdTech<small data-i18n="brand.sub">e-portfolio · Vera López</small></span>
+    </a>
+    <nav class="nav" aria-label="Secciones">
+      <a href="#about" data-i18n="nav.about">Sobre mí</a>
+      <a href="#exp" data-i18n="nav.exp">Trayectoria</a>
+      <a href="#edu" data-i18n="nav.edu">Formación</a>
+      <a href="#cert" data-i18n="nav.cert">Certificaciones</a>
+      <a href="#skills" data-i18n="nav.skills">Competencias</a>
+      <a href="#contact" data-i18n="nav.contact">Contacto</a>
+    </nav>
+    <div class="lang" role="group" aria-label="Idioma / Language / Langue">
+      <button data-lang="es" class="on">ES</button>
+      <button data-lang="en">EN</button>
+      <button data-lang="fr">FR</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="hero-in">
+    <div class="patient-line">
+      <span data-i18n="hero.tag">Enfermera · Docente FP · EdTech &amp; IA</span>
+      <span class="live"><span class="dot"></span><span data-i18n="hero.live">Sistema activo</span></span>
+    </div>
+    <h1>Vera López</h1>
+    <p class="role" data-i18n-html="hero.role"></p>
+    <div class="hero-cta">
+      <a class="btn btn-red" href="#exp" data-i18n="hero.ctaPrimary">Ver trayectoria</a>
+      <a class="btn btn-ghost" href="#contact" data-i18n="hero.ctaSecondary">Contactar</a>
+    </div>
+
+    <div class="ecg-hero" aria-hidden="true">
+      <svg viewBox="0 0 1200 150" preserveAspectRatio="none">
+        <path class="ecg-base" id="ecgBase"></path>
+        <path class="ecg-live" id="ecgLive"></path>
+      </svg>
+    </div>
+
+    <div class="readouts">
+      <div class="ro g"><div class="v">9+</div><div class="l" data-i18n="stat.years">Años de asistencia sanitaria</div></div>
+      <div class="ro c"><div class="v">5</div><div class="l" data-i18n="stat.masters">Másteres · grado + expertos</div></div>
+      <div class="ro a"><div class="v">10+</div><div class="l" data-i18n="stat.certs">Certificaciones clínicas</div></div>
+      <div class="ro r"><div class="v">2022</div><div class="l" data-i18n="stat.award">Nominada Mejor Docente · Educa Abanca</div></div>
+    </div>
+
+    <div class="scrollcue"><span data-i18n="hero.scroll">Vera López es Enferlorian, autora de sanidadedtech.</span></div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="sec" id="about">
+  <div class="wrap">
+    <div class="eyebrow rv" data-i18n="about.eyebrow">El origen</div>
+    <h2 class="rv" data-i18n="about.title">Del casco mandaloriano al aula</h2>
+    <div class="about-grid">
+      <div class="about-body rv">
+        <p data-i18n-html="about.p1"></p>
+        <p data-i18n-html="about.p2"></p>
+        <p data-i18n-html="about.p3"></p>
+      </div>
+      <aside class="factbox rv">
+        <h4 data-i18n="about.factsTitle">Constantes</h4>
+        <svg class="ecg-mini" viewBox="0 0 520 26" preserveAspectRatio="none"><path class="mini-base" id="miniBase"></path><path class="mini-live" id="miniLive"></path></svg>
+        <ul id="factList"></ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HIGHLIGHTS ============ -->
+<section class="sec sec-alt" id="highlights">
+  <div class="wrap">
+    <div class="eyebrow rv" data-i18n="hl.eyebrow">Por qué encaja</div>
+    <h2 class="rv" data-i18n="hl.title">Cuatro terrenos, una misma precisión</h2>
+    <div class="hl-grid" id="hlGrid"></div>
+  </div>
+</section>
+
+<!-- ============ EXPERIENCE ============ -->
+<section class="sec" id="exp">
+  <div class="wrap">
+    <div class="eyebrow rv" data-i18n="exp.eyebrow">Trayectoria</div>
+    <h2 class="rv" data-i18n="exp.title">Forjada en la emergencia real</h2>
+    <div class="filters rv" id="expFilters">
+      <button data-f="all" class="on" data-i18n="exp.fAll">Todo</button>
+      <button data-f="care" data-i18n="exp.fCare">Asistencial</button>
+      <button data-f="mgmt" data-i18n="exp.fMgmt">Gestión</button>
+      <button data-f="teach" data-i18n="exp.fTeach">Docencia &amp; EdTech</button>
+    </div>
+    <div class="timeline" id="timeline"></div>
+    <p class="tl-note" data-i18n="exp.note">Selección representativa. Historial completo disponible en LinkedIn.</p>
+  </div>
+</section>
+
+<!-- ============ EDUCATION ============ -->
+<section class="sec sec-alt" id="edu">
+  <div class="wrap">
+    <div class="eyebrow rv" data-i18n="edu.eyebrow">Formación</div>
+    <h2 class="rv" data-i18n="edu.title">Una armadura académica completa</h2>
+    <div class="edu-grid" id="eduGrid"></div>
+  </div>
+</section>
+
+<!-- ============ CERTIFICATIONS ============ -->
+<section class="sec" id="cert">
+  <div class="wrap">
+    <div class="eyebrow rv" data-i18n="cert.eyebrow">Certificaciones</div>
+    <h2 class="rv" data-i18n="cert.title">Instructora, proveedora e innovadora</h2>
+    <div class="cert-grid" id="certGrid"></div>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section class="sec sec-alt" id="skills">
+  <div class="wrap">
+    <div class="eyebrow rv" data-i18n="skills.eyebrow">Competencias</div>
+    <h2 class="rv" data-i18n="skills.title">Lo que llevo al equipo y al aula</h2>
+    <div class="sk-grid" id="skGrid"></div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="sec contact" id="contact">
+  <div class="wrap">
+    <div class="eyebrow rv" data-i18n="contact.eyebrow">Contacto</div>
+    <h2 class="rv" data-i18n="contact.title">Este es el camino. Hablemos.</h2>
+    <p class="lead rv" data-i18n="contact.lead">SanidadEdTech es mi base de operaciones. Pregunta lo que necesites.</p>
+    <div class="links rv">
+      <a class="lk" href="https://sanidadedtech.es" target="_blank" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></span>
+        <span><span class="m">WEB</span><span class="n">sanidadedtech.es</span></span>
+      </a>
+      <a class="lk" href="https://sites.google.com/view/botiquin-de-emergencias/inicio" target="_blank" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6M12 3v4M5 11a7 7 0 0 1 14 0v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M12 12v4M10 14h4"/></svg></span>
+        <span><span class="m" data-i18n="contact.originM">EL ORIGEN</span><span class="n">Botiquín de Emergencias</span></span>
+      </a>
+      <a class="lk" href="https://instagram.com/sanidadedtech" target="_blank" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span>
+        <span><span class="m">INSTAGRAM</span><span class="n">@sanidadedtech · Enferlorian</span></span>
+      </a>
+      <a class="lk" href="https://www.linkedin.com/in/vera-l%C3%B3pez-15603625a/" target="_blank" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v0M11 17v-4a2 2 0 0 1 4 0v4M11 10v7"/></svg></span>
+        <span><span class="m">LINKEDIN</span><span class="n">Vera López</span></span>
+      </a>
+    </div>
+    <div class="credo">
+      <span class="way"><img class="way-logo" src="data:image/png;base64,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" alt="SanidadEdTech"><span data-i18n="footer.way">Este es el camino.</span></span>
+      <small data-i18n="footer.rights">© 2026 Vera López · SanidadEdTech</small>
+    </div>
+  </div>
+</section>
+
+<script>
+/* ============================================================
+   CONTENT — trilingual (ES / EN / FR)
+   ============================================================ */
+const UI = {
+  es:{
+    "brand.sub":"e-portfolio · Vera López",
+    "nav.about":"Sobre mí","nav.exp":"Trayectoria","nav.edu":"Formación","nav.cert":"Certificaciones","nav.skills":"Competencias","nav.contact":"Contacto",
+    "hero.tag":"Enfermera · Docente FP · EdTech & IA","hero.live":"Sistema activo",
+    "hero.role":"Enfermera de <b>urgencias y emergencias</b> · Profesora Titular de <b>FP Sanidad y Seguridad</b> · Instructora en <b>SVB y Stop the Bleed</b> · <b>EdTech e Inteligencia Artificial</b>.",
+    "hero.ctaPrimary":"Ver trayectoria","hero.ctaSecondary":"Contactar","hero.scroll":"Vera López es Enferlorian, autora de sanidadedtech.",
+    "stat.years":"Años de asistencia sanitaria","stat.masters":"Másteres (+ grado y expertos)","stat.certs":"Certificaciones clínicas","stat.award":"Nominada Mejor Docente · Educa Abanca",
+    "about.eyebrow":"El origen","about.title":"Del casco mandaloriano al aula",
+    "about.p1":"Soy <b>Vera López</b>. En SanidadEdTech convergen la asistencia sanitaria crítica, la innovación educativa y la Inteligencia Artificial. Para entender el presente hay que mirar al origen: este proyecto nació del <b>Botiquín de Emergencias</b> y de mis inicios como «Enferlorian», la enfermera que divulgaba salud y educación con la misma lealtad con la que se protege un objetivo.",
+    "about.p2":"El casco fue el principio; el Credo sigue intacto. Esa misma precisión que exige una emergencia la traslado hoy al aula como <b>Profesora Titular de Formación Profesional Sanitaria</b>.",
+    "about.p3":"Mi misión —reconocida con una <b>Nominación a Mejor Docente de España (Premios Educa Abanca 2022)</b>— consiste en preparar a los futuros sanitarios con rigor técnico, corazón humano y herramientas digitales.",
+    "about.factsTitle":"Constantes",
+    "hl.eyebrow":"Por qué encaja","hl.title":"Cinco terrenos, una misma precisión",
+    "exp.eyebrow":"Trayectoria","exp.title":"Forjada en la emergencia real",
+    "exp.fAll":"Todo","exp.fCare":"Asistencial","exp.fMgmt":"Gestión","exp.fTeach":"Docencia & EdTech",
+    "exp.note":"Selección representativa · historial completo disponible en LinkedIn.","exp.present":"Actualidad","exp.mgmt":"Gestión",
+    "edu.eyebrow":"Formación","edu.title":"Una armadura académica sólida como el beskar y especializada","edu.now":"En curso",
+    "cert.eyebrow":"Certificaciones","cert.title":"Instructora, proveedora e innovadora","cert.inst":"Instructora","cert.provider":"Proveedora","cert.ai":"IA & Innovación",
+    "skills.eyebrow":"Competencias","skills.title":"Lo que llevo al equipo y al aula",
+    "contact.eyebrow":"Contacto","contact.title":"Este es el camino. Hablemos.","contact.lead":"SanidadEdTech es mi base de operaciones. Pregunta lo que necesites.","contact.originM":"EL ORIGEN",
+    "footer.way":"Este es el camino.","footer.rights":"© 2026 Vera López · SanidadEdTech"
+  },
+  en:{
+    "brand.sub":"e-portfolio · Vera López",
+    "nav.about":"About","nav.exp":"Experience","nav.edu":"Education","nav.cert":"Certifications","nav.skills":"Skills","nav.contact":"Contact",
+    "hero.tag":"Nurse · Vocational Educator · EdTech & AI","hero.live":"System live",
+    "hero.role":"<b>Emergency & urgent-care nurse</b> · Tenured <b>Health & Safety VET Educator</b> · <b>BLS & Stop the Bleed instructor</b> · <b>EdTech & Artificial Intelligence</b>.",
+    "hero.ctaPrimary":"See experience","hero.ctaSecondary":"Get in touch","hero.scroll":"Vera López is Enferlorian, author of sanidadedtech.",
+    "stat.years":"Years in front-line care","stat.masters":"Master's degrees (+ BSc & experts)","stat.certs":"Clinical certifications","stat.award":"Best-Teacher nominee · Educa Abanca",
+    "about.eyebrow":"The origin","about.title":"From the Mandalorian helmet to the classroom",
+    "about.p1":"I'm <b>Vera López</b>. SanidadEdTech is where critical healthcare, educational innovation and Artificial Intelligence meet. To understand the present, look at the origin: this project grew from <b>Botiquín de Emergencias</b> and from my beginnings as “Enferlorian”, the nurse who shared health and education with the same loyalty you'd guard a mission with.",
+    "about.p2":"The helmet was the beginning; the Creed is still intact. The precision an emergency demands is the precision I now bring to the classroom as a <b>tenured Vocational Health Education teacher</b>.",
+    "about.p3":"My mission —recognised with a <b>nomination for Best Teacher in Spain (Educa Abanca Awards 2022)</b>— is to prepare future healthcare professionals with technical rigour, a human heart and digital tools.",
+    "about.factsTitle":"Vitals",
+    "hl.eyebrow":"Why I fit","hl.title":"Five arenas, one precision",
+    "exp.eyebrow":"Experience","exp.title":"Forged in real emergencies",
+    "exp.fAll":"All","exp.fCare":"Clinical","exp.fMgmt":"Management","exp.fTeach":"Teaching & EdTech",
+    "exp.note":"Representative selection · full history available on LinkedIn.","exp.present":"Present","exp.mgmt":"Management",
+    "edu.eyebrow":"Education","edu.title":"Academic armour — beskar-solid and specialised","edu.now":"In progress",
+    "cert.eyebrow":"Certifications","cert.title":"Instructor, provider and innovator","cert.inst":"Instructor","cert.provider":"Provider","cert.ai":"AI & Innovation",
+    "skills.eyebrow":"Skills","skills.title":"What I bring to the team and the classroom",
+    "contact.eyebrow":"Contact","contact.title":"This is the way. Let's talk.","contact.lead":"SanidadEdTech is my base of operations. Ask me anything.","contact.originM":"THE ORIGIN",
+    "footer.way":"This is the way.","footer.rights":"© 2026 Vera López · SanidadEdTech"
+  },
+  fr:{
+    "brand.sub":"e-portfolio · Vera López",
+    "nav.about":"À propos","nav.exp":"Parcours","nav.edu":"Formation","nav.cert":"Certifications","nav.skills":"Compétences","nav.contact":"Contact",
+    "hero.tag":"Infirmière · Enseignante FP · EdTech & IA","hero.live":"Système actif",
+    "hero.role":"Infirmière <b>urgences & pré-hospitalier</b> · Professeure titulaire de <b>FP santé & sécurité</b> · <b>Formatrice RCP de base & Stop the Bleed</b> · <b>EdTech & Intelligence Artificielle</b>.",
+    "hero.ctaPrimary":"Voir le parcours","hero.ctaSecondary":"Me contacter","hero.scroll":"Vera López est Enferlorian, autrice de sanidadedtech.",
+    "stat.years":"Ans de soins de première ligne","stat.masters":"Masters (+ licence & experts)","stat.certs":"Certifications cliniques","stat.award":"Nommée Meilleure Enseignante · Educa Abanca",
+    "about.eyebrow":"L'origine","about.title":"Du casque mandalorien à la salle de classe",
+    "about.p1":"Je suis <b>Vera López</b>. SanidadEdTech, c'est le point de rencontre entre les soins critiques, l'innovation pédagogique et l'Intelligence Artificielle. Pour comprendre le présent, il faut regarder l'origine : ce projet est né de <b>Botiquín de Emergencias</b> et de mes débuts sous le nom d'« Enferlorian », l'infirmière qui partageait santé et éducation avec la loyauté que l'on met à protéger une mission.",
+    "about.p2":"Le casque fut le commencement ; le Credo reste intact. La précision qu'exige une urgence, je l'apporte aujourd'hui en classe comme <b>Professeure titulaire de Formation Professionnelle en santé</b>.",
+    "about.p3":"Ma mission —distinguée par une <b>nomination au prix du Meilleur Enseignant d'Espagne (Prix Educa Abanca 2022)</b>— est de préparer les futurs soignants avec rigueur technique, cœur humain et outils numériques.",
+    "about.factsTitle":"Constantes",
+    "hl.eyebrow":"Pourquoi moi","hl.title":"Cinq terrains, une même précision",
+    "exp.eyebrow":"Parcours","exp.title":"Forgée dans l'urgence réelle",
+    "exp.fAll":"Tout","exp.fCare":"Soins","exp.fMgmt":"Gestion","exp.fTeach":"Enseignement & EdTech",
+    "exp.note":"Sélection représentative · historique complet disponible sur LinkedIn.","exp.present":"Aujourd'hui","exp.mgmt":"Gestion",
+    "edu.eyebrow":"Formation","edu.title":"Une armure académique solide comme le beskar et spécialisée","edu.now":"En cours",
+    "cert.eyebrow":"Certifications","cert.title":"Formatrice, prestataire et innovatrice","cert.inst":"Formatrice","cert.provider":"Prestataire","cert.ai":"IA & Innovation",
+    "skills.eyebrow":"Compétences","skills.title":"Ce que j'apporte à l'équipe et à la classe",
+    "contact.eyebrow":"Contact","contact.title":"C'est la voie. Parlons-en.","contact.lead":"SanidadEdTech est ma base d'opérations. Demandez-moi ce dont vous avez besoin.","contact.originM":"L'ORIGINE",
+    "footer.way":"C'est la voie.","footer.rights":"© 2026 Vera López · SanidadEdTech"
+  }
+};
+
+/* Fact box list */
+const FACTS = {
+  es:[["+9","Años de experiencia asistencial (urgencias, prehospitalario, HEMS)"],["SVA","Enfermera de Soporte Vital Avanzado · SVAE y SVAM"],["ERIE","Referente en Comunicaciones de Equipos de Respuesta Inmediata"],["FP","Profesora Titular · docencia online y presencial"],["IA","Máster en IA aplicada a la salud + EdTech"]],
+  en:[["+9","Years of front-line care (ER, prehospital, HEMS)"],["ALS","Advanced Life Support nurse · SVAE & SVAM"],["ERIE","Comms lead in Immediate Response Emergency Teams"],["VET","Tenured teacher · online & on-site"],["AI","Master's in AI applied to health + EdTech"]],
+  fr:[["+9","Ans de soins de première ligne (urgences, pré-hospitalier, HEMS)"],["SVA","Infirmière en réanimation avancée · SVAE & SVAM"],["ERIE","Référente Communications des équipes de réponse immédiate"],["FP","Professeure titulaire · en ligne et présentiel"],["IA","Master en IA appliquée à la santé + EdTech"]]
+};
+
+/* Highlights */
+const HL = {
+  es:[
+    ["care","Asistencia crítica","SVA prehospitalario, ambulancias (SVAE/SVAM), HEMS, emergencias en playas, dispositivos de riesgo previsible (DRP) y despliegues de emergencias (ayuda humanitaria, incendios y otros riesgos antrópicos)."],
+    ["hosp","Asistencia hospitalaria","Urgencias hospitalarias —críticos, triaje, cirugía menor y observación— y atención primaria."],
+    ["comms","Gestión de crisis","He sido Responsable Provincial Sanitaria y soy referente en Comunicaciones ERIE: coordino y hago fluir la información en pleno caos."],
+    ["teach","Docencia FP sanidad y seguridad","T.S en Coordinación en Emergencias y Protección Civil, Documentación Sanitaria, Emergencias Sanitarias, Farmacia, Cuidados de Enfermería…, tutorización de FCT, FFE y Proyecto Intermodular."],
+    ["ai","EdTech e IA","Transformo el aula con IA generativa, vibecoding, diseño instruccional e IA aplicada a la salud. Innovación con rigor, no por moda."]
+  ],
+  en:[
+    ["care","Critical care","Prehospital ALS, ambulances (SVAE/SVAM), HEMS, beach emergencies, foreseeable-risk events (DRP) and emergency deployments (humanitarian aid, wildfires and other man-made hazards)."],
+    ["hosp","Hospital care","Hospital emergencies —critical care, triage, minor surgery and observation— and primary care."],
+    ["comms","Crisis management","I've served as Provincial Health Manager and I'm the ERIE Communications lead: I coordinate and keep information flowing amid chaos."],
+    ["teach","VET teaching · health & safety","Emergency Coordination & Civil Protection, Health Records, Emergency Medical, Pharmacy, Nursing Care…, plus FCT, in-company (FFE) and Intermodular Project tutoring."],
+    ["ai","EdTech & AI","I transform the classroom with generative AI, vibecoding, instructional design and AI applied to health. Innovation with rigour, not hype."]
+  ],
+  fr:[
+    ["care","Soins critiques","SVA pré-hospitalier, ambulances (SVAE/SVAM), HEMS, secours en plage, dispositifs à risque prévisible (DRP) et déploiements d'urgence (aide humanitaire, incendies et autres risques anthropiques)."],
+    ["hosp","Soins hospitaliers","Urgences hospitalières —soins critiques, triage, petite chirurgie et observation— et soins primaires."],
+    ["comms","Gestion de crise","J'ai été responsable provinciale santé et je suis référente Communications ERIE : je coordonne et fais circuler l'information dans le chaos."],
+    ["teach","Enseignement FP santé & sécurité","T.S coordination des urgences & protection civile, documentation sanitaire, urgences, pharmacie, soins infirmiers…, tutorat FCT, FFE et Projet intermodulaire."],
+    ["ai","EdTech & IA","Je transforme la classe avec l'IA générative, le vibecoding, la conception pédagogique et l'IA appliquée à la santé. Innovation rigoureuse, pas un effet de mode."]
+  ]
+};
+const HL_ICONS = {
+  hosp:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V8l8-5 8 5v13M9 21v-6h6v6M12 8.5v3M10.5 10h3"/></svg>',
+  care:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-6 3 12 2-6h5"/></svg>',
+  comms:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v6M12 9a3 3 0 0 0-3 3v7h6v-7a3 3 0 0 0-3-3zM5 8a9 9 0 0 1 14 0M8 10a5 5 0 0 1 8 0"/></svg>',
+  teach:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l9-4 9 4-9 4-9-4zM7 10v5c0 1 2 3 5 3s5-2 5-3v-5M21 8v5"/></svg>',
+  ai:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4M9 2v2M15 2v2M9 20v2M15 20v2"/></svg>'
+};
+
+/* Experience — from/to as MM/YYYY, to:"now" for ongoing */
+const EXP = [
+  {org:"Servicio Andaluz de Salud (SAS)",from:"07/2026",to:"now",type:"care",
+    t:{es:{title:"Enfermera de Atención Primaria y emergencias prehospitalarias",desc:"Unidades de soporte vital avanzado de enfermería (SVAE) y medicalizado (SVAM)."},
+       en:{title:"Primary-care & prehospital emergency nurse",desc:"Advanced Life Support nursing (SVAE) and medicalised (SVAM) units."},
+       fr:{title:"Infirmière soins primaires & urgences pré-hospitalières",desc:"Unités de réanimation avancée infirmière (SVAE) et médicalisée (SVAM)."}}},
+  {org:"Servicio Andaluz de Salud",from:"02/2026",to:"07/2026",type:"care",
+    t:{es:{title:"Enfermera de Urgencias",desc:"Soporte Vital Avanzado."},en:{title:"Emergency nurse",desc:"Advanced Life Support."},fr:{title:"Infirmière urgences",desc:"Réanimation avancée."}}},
+  {org:"Cruz Roja Española",from:"07/2025",to:"11/2025",type:"care",mgmt:true,
+    t:{es:{title:"Responsable Provincial Sanitaria",desc:"Coordinación en DRP, jefa de equipo en intervenciones de emergencia, coordinación sanitaria, enfermera de SVA, gestión administrativa, logística sanitaria y dotación."},
+       en:{title:"Provincial Health Manager",desc:"DRP coordination, team lead in emergency interventions, health coordination, ALS nurse, administrative management, sanitary logistics and equipment."},
+       fr:{title:"Responsable provinciale santé",desc:"Coordination DRP, chef d'équipe en interventions d'urgence, coordination sanitaire, infirmière SVA, gestion administrative, logistique et dotation."}}},
+  {org:"Servicio Andaluz de Salud",from:"07/2025",to:"09/2025",type:"care",
+    t:{es:{title:"Enfermera de Urgencias (SVA)",desc:""},en:{title:"Emergency nurse (ALS)",desc:""},fr:{title:"Infirmière urgences (SVA)",desc:""}}},
+  {org:"Universidad Europea",from:"07/2025",to:"09/2025",type:"teach",
+    t:{es:{title:"Creación de contenido: Digitalización e IA en salud",desc:"Contenidos del Certificado Universitario en avances biotecnológicos, digitalización e IA en salud."},
+       en:{title:"Content design: Digitalisation & AI in health",desc:"Materials for the University Certificate in biotech advances, digitalisation and AI in health."},
+       fr:{title:"Création de contenu : numérisation & IA en santé",desc:"Contenus du Certificat universitaire en avancées biotechnologiques, numérisation et IA en santé."}}},
+  {org:"Servicio Andaluz de Salud",from:"12/2024",to:"05/2025",type:"care",
+    t:{es:{title:"Enfermera — Urgencias hospitalarias, A. Primaria y prehospitalaria",desc:"Urgencias hospitalarias, atención primaria y SUAP en unidades de SVA de enfermería (EMCA) y medicalizado (SVAM)."},
+       en:{title:"Nurse — Hospital ER, primary & prehospital care",desc:"Hospital emergencies, primary care and out-of-hours ALS units (EMCA) and medicalised (SVAM)."},
+       fr:{title:"Infirmière — urgences hospitalières, soins primaires & pré-hospitalier",desc:"Urgences hospitalières, soins primaires et unités SVA infirmières (EMCA) et médicalisées (SVAM)."}}},
+  {org:"Universidad Europea",from:"09/2024",to:"now",type:"teach",
+    t:{es:{title:"Profesora de Ciclos Superiores de Sanidad",desc:"Docencia online: Imagen para el Diagnóstico y Medicina Nuclear, Documentación Sanitaria y Primeros Auxilios. Aptitudes: IA generativa y elaboración de temario."},
+       en:{title:"Higher VET Health-cycles teacher",desc:"Online teaching: Diagnostic Imaging & Nuclear Medicine, Health Records and First Aid. Skills: generative AI and syllabus design."},
+       fr:{title:"Enseignante cycles supérieurs santé",desc:"Enseignement en ligne : imagerie diagnostique & médecine nucléaire, documentation sanitaire et premiers secours. IA générative et conception de programmes."}}},
+  {org:"Cruz Roja Española",from:"11/2024",to:"12/2024",type:"teach",
+    t:{es:{title:"Profesora de FP de Sanidad",desc:"Técnico en Emergencias Sanitarias y Técnico en Cuidados de Enfermería."},
+       en:{title:"VET Health teacher",desc:"Emergency Medical Technician and Nursing Care technician programmes."},
+       fr:{title:"Enseignante FP santé",desc:"Technicien en urgences sanitaires et technicien en soins infirmiers."}}},
+  {org:"Servicio Andaluz de Salud",from:"07/2024",to:"09/2024",type:"care",
+    t:{es:{title:"Enfermera de emergencias y urgencias",desc:"Urgencias de atención primaria y emergencias prehospitalarias en SUAP (EMCA y SVAM)."},
+       en:{title:"Emergency & urgent-care nurse",desc:"Primary-care emergencies and prehospital response (EMCA and SVAM)."},
+       fr:{title:"Infirmière urgences & pré-hospitalier",desc:"Urgences en soins primaires et réponse pré-hospitalière (EMCA et SVAM)."}}},
+  {org:"Arduán Formación",from:"09/2022",to:"09/2024",type:"teach",
+    t:{es:{title:"Profesora Titular de FP de Sanidad",desc:"Radioterapia y Dosimetría, Imagen para el Diagnóstico y Medicina Nuclear, Cuidados de Enfermería. Módulos: Anatomía por la imagen, técnicas básicas de enfermería, higiene del medio hospitalario, promoción de la salud y documentación sanitaria."},
+       en:{title:"Tenured VET Health teacher",desc:"Radiotherapy & Dosimetry, Diagnostic Imaging & Nuclear Medicine, Nursing Care. Modules: imaging anatomy, basic nursing techniques, hospital hygiene, health promotion and health records."},
+       fr:{title:"Professeure titulaire FP santé",desc:"Radiothérapie & dosimétrie, imagerie diagnostique & médecine nucléaire, soins infirmiers. Modules : anatomie par l'image, techniques de base, hygiène hospitalière, promotion de la santé et documentation."}}},
+  {org:"Universidad Europea",from:"03/2024",to:"05/2024",type:"teach",
+    t:{es:{title:"Tutora de prácticas · Máster de Profesorado (Procesos Sanitarios)",desc:""},en:{title:"Practicum tutor · Teacher-training Master's (Health Processes)",desc:""},fr:{title:"Tutrice de stage · Master enseignement (Processus sanitaires)",desc:""}}},
+  {org:"Universidad Nebrija",from:"02/2024",to:"05/2024",type:"teach",
+    t:{es:{title:"Tutora de prácticas · Máster de Profesorado (Sanidad)",desc:""},en:{title:"Practicum tutor · Teacher-training Master's (Health)",desc:""},fr:{title:"Tutrice de stage · Master enseignement (Santé)",desc:""}}},
+  {org:"TECH Universidad Tecnológica",from:"07/2023",to:"12/2023",type:"teach",
+    t:{es:{title:"Creadora de contenido académico",desc:"Módulo de atención sanitaria inicial en situaciones de emergencia."},
+       en:{title:"Academic content creator",desc:"Initial healthcare in emergency situations module."},
+       fr:{title:"Créatrice de contenu académique",desc:"Module de soins initiaux en situation d'urgence."}}},
+  {org:"UNIR",from:"01/2023",to:"04/2023",type:"teach",
+    t:{es:{title:"Tutora de prácticas · Máster de Profesorado (Sanidad)",desc:""},en:{title:"Practicum tutor · Teacher-training Master's (Health)",desc:""},fr:{title:"Tutrice de stage · Master enseignement (Santé)",desc:""}}},
+  {org:"Universidad Europea",from:"11/2022",to:"04/2023",type:"teach",
+    t:{es:{title:"Tutora de prácticas · Máster de Profesorado (Salud)",desc:""},en:{title:"Practicum tutor · Teacher-training Master's (Health)",desc:""},fr:{title:"Tutrice de stage · Master enseignement (Santé)",desc:""}}},
+  {org:"Helicópteros Sanitarios",from:"03/2021",to:"08/2021",type:"care",
+    t:{es:{title:"Enfermera SVAM (HEMS)",desc:"Enfermera extrahospitalaria de Soporte Vital Avanzado Medicalizado."},
+       en:{title:"HEMS ALS nurse",desc:"Out-of-hospital Medicalised Advanced Life Support nurse."},
+       fr:{title:"Infirmière SVAM (HEMS)",desc:"Infirmière extra-hospitalière en réanimation avancée médicalisée."}}},
+  {org:"Servicio Andaluz de Salud",from:"07/2020",to:"09/2022",type:"care",
+    t:{es:{title:"Enfermera de Atención Primaria y Urgencias",desc:""},en:{title:"Primary-care & emergency nurse",desc:""},fr:{title:"Infirmière soins primaires & urgences",desc:""}}},
+  {org:"Cesur",from:"10/2019",to:"now",type:"teach",
+    t:{es:{title:"Profesora Titular de FP de Sanidad y Seguridad/Medioambiente",desc:"Ciclos de grado superior y medio, online y presencial: T.S en Coordinación en Emergencias y Protección Civil, Documentación Sanitaria, Emergencias Sanitarias, Farmacia y Cuidados de Enfermería. Tutorización de FCT, FFE y Proyecto Intermodular."},
+       en:{title:"Tenured VET teacher · Health & Safety/Environment",desc:"Higher and intermediate cycles, online and on-site: Emergency Coordination & Civil Protection, Health Records, Emergency Medical, Pharmacy and Nursing Care. FCT, in-company training (FFE) and Intermodular Project tutoring."},
+       fr:{title:"Professeure titulaire FP · santé et sécurité/environnement",desc:"Cycles supérieurs et intermédiaires, en ligne et présentiel : coordination des urgences & protection civile, documentation sanitaire, urgences, pharmacie et soins infirmiers. Tutorat FCT, FFE et Projet intermodulaire."}}},
+  {org:"Cruz Roja Española",from:"12/2018",to:"10/2019",type:"care",mgmt:true,
+    t:{es:{title:"Enfermera · Coordinadora sanitaria ERIE",desc:"Coordinadora del Equipo de Respuesta Inmediata en Emergencias de ayuda humanitaria a inmigrantes (ERIE AHI). SVA (SVAE y SVAM) en dispositivos de riesgo previsible, responsable de formación y gestión de material."},
+       en:{title:"Nurse · ERIE health coordinator",desc:"Coordinator of the Immediate Response Emergency Team for humanitarian aid to migrants (ERIE AHI). ALS (SVAE & SVAM) at foreseeable-risk events, training lead and equipment management."},
+       fr:{title:"Infirmière · coordinatrice santé ERIE",desc:"Coordinatrice de l'équipe de réponse immédiate d'aide humanitaire aux migrants (ERIE AHI). SVA (SVAE & SVAM) sur dispositifs à risque, responsable formation et gestion du matériel."}}},
+  {org:"Medical Service Care",from:"09/2018",to:"11/2018",type:"care",
+    t:{es:{title:"Enfermera",desc:""},en:{title:"Nurse",desc:""},fr:{title:"Infirmière",desc:""}}},
+  {org:"Asistencia Sanitaria Malagueña S.L.",from:"07/2018",to:"09/2018",type:"care",
+    t:{es:{title:"Enfermera · traslados interhospitalarios (SVA)",desc:""},en:{title:"Nurse · inter-hospital transfers (ALS)",desc:""},fr:{title:"Infirmière · transferts inter-hospitaliers (SVA)",desc:""}}},
+  {org:"Medios Acuáticos S.L.",from:"06/2017",to:"09/2017",type:"care",
+    t:{es:{title:"Enfermera de emergencias prehospitalarias en playas",desc:""},en:{title:"Beach prehospital emergency nurse",desc:""},fr:{title:"Infirmière urgences pré-hospitalières en plage",desc:""}}},
+  {org:"Servicio Andaluz de Salud",from:"07/2017",to:"08/2017",type:"care",
+    t:{es:{title:"Enfermera · unidad de arritmias",desc:"Consulta Holter y ecocardiografía/doppler."},en:{title:"Nurse · arrhythmia unit",desc:"Holter clinic and echocardiography/Doppler."},fr:{title:"Infirmière · unité d'arythmies",desc:"Consultation Holter et échocardiographie/doppler."}}}
+];
+
+/* Education */
+const EDU = [
+  {inst:"Informática y Comunicaciones · FP",tag:"Ciclo Superior",now:true,
+    t:{es:"Cursando: T.S en Desarrollo de Aplicaciones Multiplataforma (DAM)",en:"In progress: Higher VET in Multiplatform App Development (DAM)",fr:"En cours : BTS Développement d'applications multiplateformes (DAM)"}},
+  {inst:"Universidad de Málaga",tag:"Máster",
+    t:{es:"Máster en Asistencia Extrahospitalaria y Aeroevacuación Medicalizada en Emergencias y Catástrofes",en:"Master's in Out-of-Hospital Care & Medicalised Aeromedical Evacuation in Emergencies & Disasters",fr:"Master en assistance extra-hospitalière et aéroévacuation médicalisée en urgences et catastrophes"}},
+  {inst:"Founderz (Microsoft)",tag:"Máster",
+    t:{es:"Máster en Inteligencia Artificial aplicada a la Salud",en:"Master's in Artificial Intelligence applied to Health",fr:"Master en Intelligence Artificielle appliquée à la santé"}},
+  {inst:"VIU · Universidad Internacional de Valencia",tag:"Máster oficial",
+    t:{es:"Máster Oficial en TIC aplicadas a la Educación (EdTech)",en:"Official Master's in ICT applied to Education (EdTech)",fr:"Master officiel en TIC appliquées à l'éducation (EdTech)"}},
+  {inst:"Universidad de Extremadura",tag:"Máster · habilitación docente",
+    t:{es:"Máster Universitario en Formación del Profesorado — Ciencias de la Salud (Procesos Sanitarios)",en:"University Master's in Teacher Training — Health Sciences (Health Processes)",fr:"Master universitaire en formation des enseignants — Sciences de la santé (Processus sanitaires)"}},
+  {inst:"Universidad de Alcalá",tag:"Máster",
+    t:{es:"Máster en Farmacoterapia y Seguimiento Farmacoterapéutico para Enfermería",en:"Master's in Pharmacotherapy & Pharmaceutical Care for Nursing",fr:"Master en pharmacothérapie et suivi pharmacothérapeutique infirmier"}},
+  {inst:"Universidad de Málaga",tag:"Grado",
+    t:{es:"Grado Universitario en Enfermería",en:"Bachelor's Degree in Nursing",fr:"Licence en soins infirmiers"}},
+  {inst:"Universidad Internacional de Andalucía",tag:"Experto universitario",
+    t:{es:"Experto Universitario en Medicina de Urgencias y Emergencias",en:"University Expert in Emergency Medicine",fr:"Expert universitaire en médecine d'urgence"}},
+  {inst:"UNED",tag:"Experto universitario",
+    t:{es:"Experto Universitario en Cuidados de Enfermería Geriátrica y Cuidados Paliativos",en:"University Expert in Geriatric Nursing & Palliative Care",fr:"Expert universitaire en soins infirmiers gériatriques et palliatifs"}},
+  {inst:"Universidad Católica de Ávila",tag:"Experto universitario",
+    t:{es:"Experto Universitario en Salud Escolar",en:"University Expert in School Health",fr:"Expert universitaire en santé scolaire"}},
+  {inst:"URJC · UEMC · UFV",tag:"Formación docente digital",
+    t:{es:"Moodle & eXeLearning para docentes · Formador de teleformadores · Diseño de cursos e-learning",en:"Moodle & eXeLearning for teachers · Train-the-online-trainer · E-learning course design",fr:"Moodle & eXeLearning · Formation de téléformateurs · Conception de cours e-learning"}}
+];
+
+/* Certifications */
+const CERT = [
+  {kind:"inst",by:"Plan Nacional de RCP · SEMICYUC",t:{es:"Instructora de Soporte Vital Básico (SVB)",en:"Basic Life Support (BLS) Instructor",fr:"Formatrice en réanimation cardio-pulmonaire de base"}},
+  {kind:"inst",by:"American College of Surgeons",t:{es:"Instructora Stop the Bleed",en:"Stop the Bleed Instructor",fr:"Formatrice Stop the Bleed"}},
+  {kind:"prov",by:"ERC · European Resuscitation Council",t:{es:"Soporte Vital Avanzado (SVA)",en:"Advanced Life Support (ALS)",fr:"Réanimation avancée (ALS)"}},
+  {kind:"prov",by:"NAEMT",t:{es:"Soporte Vital de Trauma Prehospitalario (PHTLS)",en:"Prehospital Trauma Life Support (PHTLS)",fr:"Soins de traumatologie pré-hospitalière (PHTLS)"}},
+  {kind:"prov",by:"Consejo Español de RCP",t:{es:"RCP Avanzada Pediátrica y Neonatal",en:"Advanced Paediatric & Neonatal CPR",fr:"RCP avancée pédiatrique et néonatale"}},
+  {kind:"prov",by:"ASATTAC",t:{es:"Asistencia sanitaria en atentados con tirador activo (ASATTAC)",en:"Healthcare in active-shooter attacks (ASATTAC)",fr:"Soins lors d'attaques avec tireur actif (ASATTAC)"}},
+  {kind:"ai",by:"Google",t:{es:"Seguridad en el mundo de la IA · Introduction to LLMs",en:"Safety in the world of AI · Introduction to LLMs",fr:"Sécurité dans le monde de l'IA · Introduction aux LLM"}},
+  {kind:"ai",by:"UNAM",t:{es:"IA generativa en el aula",en:"Generative AI in the classroom",fr:"IA générative en classe"}},
+  {kind:"ai",by:"CaixaBank",t:{es:"Diseño de Proyectos de Innovación en FP",en:"Innovation Project Design in VET",fr:"Conception de projets d'innovation en FP"}}
+];
+
+/* Skills */
+const SKILLS = {
+  es:[
+    ["Asistencia crítica",["SVA","SVAE","SVAM","PHTLS","RCP avanzada","Triaje","Control de hemorragias","Prehospitalario","HEMS","Aeroevacuación","Trauma"]],
+    ["Gestión & emergencias",["ERIE · Comunicaciones","Radiocomunicaciones","Jefa de equipo en intervenciones de emergencia","Coordinación sanitaria","Logística en emergencias","Dispositivos de riesgo previsible","Evaluación de riesgos y medidas preventivas","Gestión de crisis","Gestión administrativa","Dotación sanitaria"]],
+    ["Docencia FP",["Coordinación en Emergencias","Documentación Sanitaria","Imagen para el Diagnóstico","Emergencias Sanitarias","Farmacia","Cuidados de Enfermería","Tutorización FCT","Tutorización FFE","Proyecto Intermodular","Elaboración de temario"]],
+    ["EdTech & IA",["IA generativa en el aula","Vibecoding","Prompt Engineering técnico","Programación","LLMs","Moodle","eXeLearning","Diseño e-learning","Diseño instruccional","IA en educación","IA en salud","Innovación educativa"]],
+    ["Soft skills",["Resolución de conflictos","Liderazgo","Pensamiento crítico","Adaptabilidad","Resiliencia","Visión estratégica","Comunicación efectiva","Gestión del tiempo"]]
+  ],
+  en:[
+    ["Critical care",["ALS","SVAE","SVAM","PHTLS","Advanced CPR","Triage","Bleeding control","Prehospital","HEMS","Aeromedical evacuation","Trauma"]],
+    ["Management & emergencies",["ERIE · Comms","Radio communications","Emergency-intervention team lead","Health coordination","Emergency logistics","Foreseeable-risk events","Risk assessment & prevention","Crisis management","Administrative management","Medical supply"]],
+    ["VET teaching",["Emergency Coordination","Health Records","Diagnostic Imaging","Emergency Medical","Pharmacy","Nursing Care","FCT tutoring","FFE tutoring","Intermodular Project","Syllabus design"]],
+    ["EdTech & AI",["Generative AI in class","Vibecoding","Technical prompt engineering","Programming","LLMs","Moodle","eXeLearning","E-learning design","Instructional design","AI in education","AI in health","Educational innovation"]],
+    ["Soft skills",["Conflict resolution","Leadership","Critical thinking","Adaptability","Resilience","Strategic vision","Effective communication","Time management"]]
+  ],
+  fr:[
+    ["Soins critiques",["SVA","SVAE","SVAM","PHTLS","RCP avancée","Triage","Contrôle des hémorragies","Pré-hospitalier","HEMS","Aéroévacuation","Trauma"]],
+    ["Gestion & urgences",["ERIE · Communications","Radiocommunications","Chef d'équipe en interventions d'urgence","Coordination sanitaire","Logistique d'urgence","Dispositifs à risque","Évaluation des risques & prévention","Gestion de crise","Gestion administrative","Dotation sanitaire"]],
+    ["Enseignement FP",["Coordination des urgences","Documentation sanitaire","Imagerie diagnostique","Urgences","Pharmacie","Soins infirmiers","Tutorat FCT","Tutorat FFE","Projet intermodulaire","Conception de programmes"]],
+    ["EdTech & IA",["IA générative en classe","Vibecoding","Prompt engineering technique","Programmation","LLM","Moodle","eXeLearning","Conception e-learning","Conception pédagogique","IA en éducation","IA en santé","Innovation pédagogique"]],
+    ["Soft skills",["Résolution de conflits","Leadership","Esprit critique","Adaptabilité","Résilience","Vision stratégique","Communication efficace","Gestion du temps"]]
+  ]
+};
+
+/* ============================================================
+   ENGINE
+   ============================================================ */
+let LANG = "es";
+try{ const s=localStorage.getItem("sanidad_lang"); if(s&&UI[s]) LANG=s; }catch(e){}
+
+function monthLabel(mmYYYY){ return mmYYYY; } // MM/YYYY reads the same across languages
+function period(e){ const end = e.to==="now" ? UI[LANG]["exp.present"] : e.to; return e.from+" — "+end; }
+
+function catOf(e){ return e.mgmt ? "mgmt" : e.type; }
+function renderExp(filter="all"){
+  const box=document.getElementById("timeline"); box.innerHTML="";
+  const CH={care:{es:"Asistencial",en:"Clinical",fr:"Soins"},teach:{es:"Docencia",en:"Teaching",fr:"Enseignement"}};
+  EXP.filter(e=>filter==="all"||catOf(e)===filter).forEach(e=>{
+    const tc=e.t[LANG]; const cat=catOf(e);
+    const label = cat==="mgmt" ? UI[LANG]["exp.mgmt"] : CH[cat][LANG];
+    const chips='<span class="chip '+cat+'">'+label+'</span>';
+    box.insertAdjacentHTML("beforeend",
+      '<div class="tl-item '+cat+'"><div class="tl-card">'+
+        '<div class="tl-top"><div><h3>'+tc.title+'</h3><div class="tl-org">'+e.org+'</div></div></div>'+
+        (tc.desc?'<p class="tl-desc">'+tc.desc+'</p>':'')+
+        '<div class="chips">'+chips+'</div>'+
+      '</div></div>');
+  });
+}
+function renderFacts(){
+  const ul=document.getElementById("factList"); ul.innerHTML="";
+  FACTS[LANG].forEach(f=>ul.insertAdjacentHTML("beforeend",'<li><span class="k">'+f[0]+'</span><span>'+f[1]+'</span></li>'));
+}
+function renderHL(){
+  const g=document.getElementById("hlGrid"); g.innerHTML="";
+  HL[LANG].forEach(h=>g.insertAdjacentHTML("beforeend",
+    '<div class="hl rv"><div class="ico">'+HL_ICONS[h[0]]+'</div><h3>'+h[1]+'</h3><p>'+h[2]+'</p></div>'));
+}
+function renderEdu(){
+  const g=document.getElementById("eduGrid"); g.innerHTML="";
+  EDU.forEach(ed=>g.insertAdjacentHTML("beforeend",
+    '<div class="edu rv'+(ed.now?' now':'')+'">'+(ed.now?'<span class="now-pill">'+UI[LANG]["edu.now"]+'</span>':'')+
+    '<span class="tag">'+ed.tag+'</span><h3>'+ed.t[LANG]+'</h3><div class="inst">'+ed.inst+'</div></div>'));
+}
+const STAR='<svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>';
+function renderCert(){
+  const g=document.getElementById("certGrid"); g.innerHTML="";
+  const label={inst:UI[LANG]["cert.inst"],prov:UI[LANG]["cert.provider"],ai:UI[LANG]["cert.ai"]};
+  CERT.forEach(c=>g.insertAdjacentHTML("beforeend",
+    '<div class="cert rv '+(c.kind==="inst"?"inst":c.kind==="ai"?"ai":"")+'">'+
+    '<span class="badge">'+(c.kind==="inst"?STAR:"")+label[c.kind]+'</span>'+
+    '<h3>'+c.t[LANG]+'</h3><div class="by">'+c.by+'</div></div>'));
+}
+function renderSkills(){
+  const g=document.getElementById("skGrid"); g.innerHTML="";
+  SKILLS[LANG].forEach(s=>{
+    const tags=s[1].map(t=>'<span class="t">'+t+'</span>').join("");
+    g.insertAdjacentHTML("beforeend",'<div class="sk rv"><h3><span class="bar"></span>'+s[0]+'</h3><div class="tags">'+tags+'</div></div>');
+  });
+}
+function applyUI(){
+  document.documentElement.lang=LANG;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.getAttribute("data-i18n"); if(UI[LANG][k]!==undefined) el.textContent=UI[LANG][k];});
+  document.querySelectorAll("[data-i18n-html]").forEach(el=>{const k=el.getAttribute("data-i18n-html"); if(UI[LANG][k]!==undefined) el.innerHTML=UI[LANG][k];});
+}
+function setLang(l){
+  LANG=l; try{localStorage.setItem("sanidad_lang",l);}catch(e){}
+  document.querySelectorAll(".lang button").forEach(b=>b.classList.toggle("on",b.dataset.lang===l));
+  applyUI(); renderFacts(); renderHL();
+  const af=document.querySelector("#expFilters button.on"); renderExp(af?af.dataset.f:"all");
+  renderEdu(); renderCert(); renderSkills(); observeReveal();
+}
+document.querySelectorAll(".lang button").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
+document.getElementById("expFilters").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  document.querySelectorAll("#expFilters button").forEach(x=>x.classList.toggle("on",x===b));
+  renderExp(b.dataset.f); observeReveal();
+});
+
+/* ---- ECG generator ---- */
+function ecgPath(w,h){
+  const base=h*0.60, R=h*0.50, S=h*0.24, P=h*0.11, T=h*0.17, U=h*0.045, Q=h*0.05;
+  const W=250; let x=0;
+  let d="M0 "+base.toFixed(1);
+  const L=(px,py)=>{ d+=" L"+px.toFixed(1)+" "+py.toFixed(1); };
+  const C=(cx,cy,px,py)=>{ d+=" Q"+cx.toFixed(1)+" "+cy.toFixed(1)+" "+px.toFixed(1)+" "+py.toFixed(1); };
+  while(x<w+W){
+    L(x+W*0.05, base);
+    C(x+W*0.105, base-P, x+W*0.16, base);   // P wave (rounded)
+    L(x+W*0.30, base);                       // PR segment
+    L(x+W*0.325, base+Q);                    // Q
+    L(x+W*0.36, base-R);                      // R (sharp peak)
+    L(x+W*0.395, base+S);                     // S (deep)
+    L(x+W*0.43, base);                        // return to baseline
+    L(x+W*0.58, base);                        // ST segment
+    C(x+W*0.685, base-T, x+W*0.79, base);    // T wave (rounded)
+    L(x+W*0.87, base);
+    C(x+W*0.895, base-U, x+W*0.92, base);    // U wave (small)
+    L(x+W, base);
+    x+=W;
+  }
+  return d;
+}
+(function initEcg(){
+  const d=ecgPath(1200,150);
+  const base=document.getElementById("ecgBase"), live=document.getElementById("ecgLive");
+  base.setAttribute("d",d); live.setAttribute("d",d);
+  const reduce=window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+  const len=live.getTotalLength();
+  if(reduce){ live.style.strokeDasharray="none"; return; }
+  const seg=len*0.10;
+  live.style.strokeDasharray=seg+" "+(len-seg);
+  let off=len;
+  function tick(){ off-=len/260; if(off<=0) off=len; live.style.strokeDashoffset=off; requestAnimationFrame(tick); }
+  requestAnimationFrame(tick);
+})();
+
+(function initMini(){
+  const base=document.getElementById("miniBase"), live=document.getElementById("miniLive");
+  if(!base||!live) return;
+  const d=ecgPath(520,26);
+  base.setAttribute("d",d); live.setAttribute("d",d);
+  if(window.matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+  const len=live.getTotalLength(); const seg=len*0.12;
+  live.style.strokeDasharray=seg+" "+(len-seg);
+  let off=len;
+  (function tick(){ off-=len/200; if(off<=0) off=len; live.style.strokeDashoffset=off; requestAnimationFrame(tick); })();
+})();
+
+/* ---- reveal on scroll ---- */
+let io;
+function observeReveal(){
+  const els=document.querySelectorAll(".rv:not(.in)");
+  if(!("IntersectionObserver" in window)){els.forEach(e=>e.classList.add("in"));return;}
+  if(!io) io=new IntersectionObserver((ents)=>{ents.forEach(en=>{if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target);}});},{threshold:.12,rootMargin:"0px 0px -8% 0px"});
+  els.forEach(e=>io.observe(e));
+}
+
+/* ---- init ---- */
+setLang(LANG);
+observeReveal();
+</script>
+</body>
+</html>
